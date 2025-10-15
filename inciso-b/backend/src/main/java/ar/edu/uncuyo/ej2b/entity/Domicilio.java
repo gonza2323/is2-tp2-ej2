@@ -23,6 +23,6 @@ public class Domicilio {
     private boolean eliminado;
 
     @JoinColumn(nullable = false)
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.EAGER, optional = false)
     private Localidad localidad;
 }

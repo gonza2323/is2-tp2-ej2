@@ -19,7 +19,7 @@ public class DomicilioDto {
     @Size(max = 50, message = "Máximo 50 caracteres")
     private String calle;
 
-    @NotBlank(message = "Debe indicar la numeración")
+    @NotNull(message = "Debe indicar la numeración")
     private Integer numeracion;
 
     @NotNull(message = "Debe seleccionar una localidad")

@@ -8,7 +8,7 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring" , uses = { DomicilioMapper.class })
 public interface PersonaMapper {
 
     @Mapping(target = "id", ignore = true)

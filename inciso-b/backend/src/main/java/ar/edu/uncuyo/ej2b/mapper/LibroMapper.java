@@ -9,6 +9,7 @@ import ar.edu.uncuyo.ej2b.entity.Persona;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public interface LibroMapper {
 
     @Mapping(target = "autoresIds", ignore = true)
     LibroDto toDto(Libro libro);
+
 
     List<LibroDto> toDtos(List<Libro> libros);
 }

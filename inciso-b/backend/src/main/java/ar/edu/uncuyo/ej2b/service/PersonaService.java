@@ -24,6 +24,7 @@ public class PersonaService {
     private final PersonaRepository personaRepository;
     private final LibroService libroService;
     private final DomicilioService domicilioService;
+    private final LocalidadService localidadService;
 
     @Transactional(readOnly = true)
     public Persona buscarPersona(Long id) {
@@ -49,6 +50,11 @@ public class PersonaService {
         persona.setId(null);
 
         Domicilio domicilio = domicilioService.crearDomicilio(personaDto.getDomicilio());
+        if (personaDto.getDomicilio() != null && personaDto.getDomicilio().getLocalidadId() != null) {
+            Long localidadId = personaDto.getDomicilio().getLocalidadId();
+            Localidad localidad = localidadService.buscarLocalidad(localidadId);
+            domicilio.setLocalidad(localidad);
+        }
         persona.setDomicilio(domicilio);
 
         return personaRepository.save(persona);

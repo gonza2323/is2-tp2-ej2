@@ -28,7 +28,7 @@ public class PersonaDto {
     @Size(max = 50, message = "Máximo 50 caracteres")
     private String apellido;
 
-    @NotBlank(message = "Debe indicar el DNI")
+    @NotNull(message = "Debe indicar el DNI")
     private Integer dni;
 
     @Valid

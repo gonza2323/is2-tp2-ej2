@@ -30,13 +30,15 @@ public class DomicilioService {
         return domicilioMapper.toDto(domicilio);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Domicilio crearDomicilio(DomicilioDto domicilioDto) {
         Localidad localidad = localidadService.buscarLocalidad(domicilioDto.getLocalidadId());
 
         Domicilio domicilio = domicilioMapper.toEntity(domicilioDto);
         domicilio.setId(null);
         domicilio.setLocalidad(localidad);
+        Domicilio domicilioGuardado = domicilioRepository.save(domicilio);
+        domicilioGuardado.getLocalidad().getId();
         return domicilioRepository.save(domicilio);
     }
 

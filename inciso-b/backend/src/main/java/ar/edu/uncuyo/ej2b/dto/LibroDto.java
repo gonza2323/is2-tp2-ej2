@@ -25,7 +25,7 @@ public class LibroDto {
     @Size(max = 50, message = "Máximo 50 caracteres")
     private String titulo;
 
-    @NotBlank(message = "El título no puede estar vacío")
+    @NotNull(message = "El título no puede estar vacío")
     @Size(max = 50, message = "Máximo 50 caracteres")
     private Integer fecha;
 
@@ -33,10 +33,12 @@ public class LibroDto {
     @Size(max = 50, message = "Máximo 50 caracteres")
     private String genero;
 
-    @NotBlank(message = "Debe indicar la cantidad de páginas")
+    @NotNull(message = "Debe indicar la cantidad de páginas")
     @Min(value = 1, message = "La cantidad de páginas debe ser positiva")
     private Integer paginas;
 
     @NotNull
     private List<Long> autoresIds = new ArrayList<>();
+
+    private String pdfPath;
 }

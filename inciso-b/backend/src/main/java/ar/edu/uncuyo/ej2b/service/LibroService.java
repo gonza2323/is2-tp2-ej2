@@ -5,11 +5,14 @@ import ar.edu.uncuyo.ej2b.entity.Autor;
 import ar.edu.uncuyo.ej2b.entity.Libro;
 import ar.edu.uncuyo.ej2b.error.BusinessException;
 import ar.edu.uncuyo.ej2b.mapper.LibroMapper;
+import ar.edu.uncuyo.ej2b.repository.AutorRepository;
 import ar.edu.uncuyo.ej2b.repository.LibroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -18,6 +21,8 @@ public class LibroService {
     private final LibroRepository libroRepository;
     private final LibroMapper libroMapper;
     private final AutorService autorService;
+    private final FileStorageService fileStorageService;
+    private final AutorRepository autorRepository;
 
     @Transactional(readOnly = true)
     public Libro buscarLibro(Long id) {
@@ -71,4 +76,25 @@ public class LibroService {
         libro.setEliminado(true);
         libroRepository.save(libro);
     }
+    @Transactional
+    public Libro crearLibroConPdf(LibroDto dto, MultipartFile file) {
+        Libro libro = libroMapper.toEntity(dto);
+        libro.setId(null);
+
+        if (dto.getAutoresIds() != null && !dto.getAutoresIds().isEmpty()) {
+            List<Autor> autores = autorRepository.findAllById(dto.getAutoresIds());
+            libro.setAutores(autores);
+        }
+
+        if (file != null && !file.isEmpty()) {
+            String path = fileStorageService.saveFile(file, dto.getTitulo());
+            libro.setPdfPath(path);
+        }
+
+        return libroRepository.save(libro);
+    }
+
+
+
+
 }

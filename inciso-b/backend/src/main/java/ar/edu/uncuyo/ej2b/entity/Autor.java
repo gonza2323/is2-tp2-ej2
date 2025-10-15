@@ -3,6 +3,9 @@ package ar.edu.uncuyo.ej2b.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,4 +26,7 @@ public class Autor {
     private String biografia;
 
     private boolean eliminado;
+
+    @ManyToMany(mappedBy = "autores")
+    private List<Libro> libros = new ArrayList<>();
 }
