@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Clima</title>
+    <style>
+        html{
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class ="container">
+        <h1>Clima</h1>
+        <div class="input-group">
+            <input type="text" id="cityInput" placeholder="Nombre de la ciudad (Ej. Mendoza)">
+            <input type="text" id="countryInput" placeholder="Código del país (Ej. AR) - Opcional">
+        </div>
+        <button id="getWeatherBtn">Obtener Clima</button>
+        <div id="weather-info">
+            <!-- Aquí se mostrará la información del clima -->
+        </div>
+    </div>
+    <script>
+        const API_KEY = "d29b1ae2246044a2da38ffa98538e288";
+
+        const cityInput = document.getElementById("cityInput");
+        const countryInput = document.getElementById("countryInput");
+        const getWeatherBtn = document.getElementById("getWeatherBtn");
+        const weatherInfoDiv = document.querySelector("#weather-info");
+
+        // Sensor del botón
+        getWeatherBtn.addEventListener("click", () => {
+            const city = cityInput.value;
+            const country = countryInput.value;
+
+            if (city.trim() === "") {
+                alert("Por favor ingresa el nombre de una ciudad!");
+                return;
+            }
+            // Endpoint de la API
+            const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric&lang=es`;
+            // Llamada a la API
+            fetch(API_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Ciudad no encontrada");
+                    }
+                    return response.json();
+                })
+                .then(data => displayWeather(data))
+                .catch(error => {
+                    weatherInfoDiv.innerHTML = `<p style="color:red;">${error.message}</p>`;
+                });
+        });
+
+        // Función de salida
+        function displayWeather(data) {
+            const cityName = data.name;
+            const temp = data.main.temp;
+            const description = data.weather[0].description;
+            const humidity = data.main.humidity;
+            const windSpeed = data.wind.speed;
+
+            weatherInfoDiv.innerHTML = `
+                <h2>Clima en ${cityName}</h2>
+                <p><strong>Temperatura:</strong> ${temp} °C</p>
+                <p><strong>Descripción:</strong> ${description}</p>
+                <p><strong>Humedad:</strong> ${humidity}%</p>
+                <p><strong>Velocidad del viento:</strong> ${windSpeed} m/s</p>
+            `;
+        }
+    </script>
+</body>
+</html>
