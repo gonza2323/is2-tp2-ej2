@@ -1,0 +1,9 @@
+Referencias de apps similares:
+- jane: https://jane.app/
+- osde: http://osde.com.ar/
+- agendaPro: https://agendapro.com/en
+
+
+Prototipado en Figma: https://vocal-wind-74327153.figma.site/
+
+Tablero con historias de usuario: https://miro.com/app/board/uXjVJDg9C84=/
