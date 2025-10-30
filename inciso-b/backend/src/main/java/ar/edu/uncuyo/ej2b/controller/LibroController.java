@@ -41,7 +41,7 @@ public class LibroController {
     @PostMapping
     public ResponseEntity<?> crearLibro(@Valid @RequestBody LibroCreateDto libroDto) {
         Libro libro = libroService.crearLibro(libroDto);
-        LibroCreateDto dto = libroMapper.toDto(libro);
+        LibroSummaryDto dto = libroMapper.toSummaryDto(libro);
         return ResponseEntity.ok(dto);
     }
 

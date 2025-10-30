@@ -1,30 +1,34 @@
-import { Box, Button, Grid, Group, TextInput } from '@mantine/core';
+import { Box, Button, Grid, Group, Textarea, TextInput } from '@mantine/core';
 import { paths } from '@/routes';
 import { useForm, zodResolver } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { ProveedorCreateDto } from '@/api/dtos';
-import { useCreateProveedor } from '@/hooks';
+import { AutorCreateDto } from '@/api/dtos';
+import { useCreateAutor } from '@/hooks';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-export default function ProveedorCreateForm() {
+export default function AutorCreateForm() {
   const navigate = useNavigate();
   const form = useForm({
-    validate: zodResolver(ProveedorCreateDto),
-    initialValues: { nombre: "" },
+    validate: zodResolver(AutorCreateDto),
+    initialValues: {
+      nombre: "",
+      apellido: "",
+      biografia: "",
+    },
   });
 
-  const createProveedor = useCreateProveedor();
+  const createAutor = useCreateAutor();
 
   const handleSubmit = form.onSubmit((values) => {
-    createProveedor.mutate(
+    createAutor.mutate(
       { variables: values },
       {
         onSuccess: () => {
           notifications.show({
             title: "Éxito",
-            message: "Proveedor creado correctamente",
+            message: "Autor creado correctamente",
           });
-          navigate(paths.dashboard.management.proveedores.list);
+          navigate(paths.dashboard.management.autores.list);
         },
         onError: (error) => {
           notifications.show({
@@ -48,11 +52,23 @@ export default function ProveedorCreateForm() {
         {...form.getInputProps("nombre")}
       />
 
+      <TextInput
+        label="Apellido"
+        placeholder="Ingrese el apellido"
+        {...form.getInputProps("apellido")}
+      />
+
+      <Textarea
+        label="Biografía"
+        placeholder="Biografía del autor"
+        {...form.getInputProps("biografia")}
+      />
+
       <Group justify="flex-end" mt="md">
-        <Button variant='outline' component={NavLink} to={paths.dashboard.management.proveedores.list}>
+        <Button variant='outline' component={NavLink} to={paths.dashboard.management.autores.list}>
           Cancelar
         </Button>
-        <Button type="submit" loading={createProveedor.isPending}>
+        <Button type="submit" loading={createAutor.isPending}>
           Crear
         </Button>
       </Group>

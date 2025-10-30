@@ -1,20 +1,20 @@
 import { Page } from '@/components/page';
 import { PageHeader } from '@/components/page-header';
 import { paths } from '@/routes';
-import LocalidadCreateForm from './persona-create-form';
+import AutorCreateForm from './autor-create-form';
 
 const breadcrumbs = [
   { label: 'Dashboard', href: paths.dashboard.root },
   { label: 'Management', href: paths.dashboard.management.root },
-  { label: 'Localidades', href: paths.dashboard.management.localidades.root },
-  { label: 'Nueva Localidad' },
+  { label: 'Autores', href: paths.dashboard.management.autores.root },
+  { label: 'Nuevo Autor' },
 ];
 
-export default function LocalidadCreatePage() {
+export default function AutorCreatePage() {
   return (
-    <Page title="Nueva localidad">
-      <PageHeader title="Nueva localidad" breadcrumbs={breadcrumbs} />
-      <LocalidadCreateForm />
+    <Page title="Nuevo autor">
+      <PageHeader title="Nuevo autor" breadcrumbs={breadcrumbs} />
+      <AutorCreateForm />
     </Page>
   );
 }

@@ -1,6 +1,7 @@
 package ar.edu.uncuyo.ej2b.controller;
 
 import ar.edu.uncuyo.ej2b.dto.AutorDto;
+import ar.edu.uncuyo.ej2b.dto.PersonaDto;
 import ar.edu.uncuyo.ej2b.entity.Autor;
 import ar.edu.uncuyo.ej2b.mapper.AutorMapper;
 import ar.edu.uncuyo.ej2b.service.AutorService;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +40,12 @@ public class AutorController {
         Autor autor = autorService.crearAutor(autorDto);
         AutorDto dto = autorMapper.toDto(autor);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> listarTodosLosAutores() {
+        List<AutorDto> autores = autorService.listarAutoresDtosTodos(Sort.by("apellido"));
+        return ResponseEntity.ok(autores);
     }
 
     @PutMapping("/{id}")

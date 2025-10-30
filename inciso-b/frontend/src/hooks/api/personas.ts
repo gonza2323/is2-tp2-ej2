@@ -1,6 +1,7 @@
 import { PersonaDetailDto, PersonaSummaryDto, PersonaCreateDto } from '@/api/dtos';
 import { createDeleteMutationHook, createGetQueryHook, createPaginationQueryHook, createPostMutationHook, SortableQueryParams } from '@/api/helpers';
 import { notifications } from '@mantine/notifications';
+import { z } from 'zod';
 
 const QUERY_KEY = 'personas';
 const BASE_ENDPOINT = 'personas';
@@ -17,6 +18,12 @@ export const useGetPersonas = createPaginationQueryHook<
 >({
   endpoint: BASE_ENDPOINT,
   dataSchema: PersonaSummaryDto,
+  rQueryParams: { queryKey: [QUERY_KEY] },
+});
+
+export const useGetPersonasFull = createGetQueryHook({
+  endpoint: `${BASE_ENDPOINT}/all`,
+  responseSchema: z.array(PersonaSummaryDto),
   rQueryParams: { queryKey: [QUERY_KEY] },
 });
 

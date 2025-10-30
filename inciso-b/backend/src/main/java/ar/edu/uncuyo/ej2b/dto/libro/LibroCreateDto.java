@@ -1,9 +1,6 @@
 package ar.edu.uncuyo.ej2b.dto.libro;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +20,9 @@ public class LibroCreateDto {
     @Size(max = 50, message = "Máximo 50 caracteres")
     private String titulo;
 
-    @NotNull(message = "El título no puede estar vacío")
-    @Size(max = 50, message = "Máximo 50 caracteres")
+    @NotNull(message = "Debe indicar el año de publicación")
+    @Min(value = 1000, message = "Año debe ser mayor a 999")
+    @Max(value = 2100, message = "Año debe ser menor a 2100")
     private Integer fecha;
 
     @NotBlank(message = "El género no puede estar vacío")

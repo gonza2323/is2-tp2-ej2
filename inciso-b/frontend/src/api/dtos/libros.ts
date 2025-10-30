@@ -16,7 +16,7 @@ export const LibroCreateDto = z.object({
       invalid_type_error: "Debe indicar el año de publicación",
     })
     .int()
-    .max(9999, "Año inválido"), // optional sanity limit; remove if unnecessary
+    .max(9999, "Año inválido"),
 
   genero: z
     .string({
@@ -33,29 +33,21 @@ export const LibroCreateDto = z.object({
     .min(1, "La cantidad de páginas debe ser positiva"),
 
   personaId: z
-    .number({
-      required_error: "Debe indicar la persona dueña del libro",
-      invalid_type_error: "Debe indicar la persona dueña del libro",
-    }),
+    .string({ required_error: "Debe indicar la persona dueña del libro" })
+    .min(1)
+    .transform((val) => Number(val)),
 
   autoresIds: z
-    .array(
-      z.number({
-        invalid_type_error: "Debe indicar un ID de autor válido",
-      })
-    )
-    .min(1, "Debe indicar el/los autor/es"),
+    .array(z.string())
+    .min(1, "Debe indicar el/los autor/es")
+    .transform((val) => val.map(Number)),
 
   pdfPath: z.string().optional().nullable(),
 });
-
 export type LibroCreateDto = z.infer<typeof LibroCreateDto>;
 
 export const LibroUpdateDto = LibroCreateDto;
 export type LibroUpdateDto = z.infer<typeof LibroCreateDto>;
-
-export const LibroDetailDto = LibroCreateDto;
-export type LibroDetailDto = z.infer<typeof LibroCreateDto>;
 
 export const LibroSummaryDto = z.object({
   id: z.number().optional(),
@@ -97,5 +89,7 @@ export const LibroSummaryDto = z.object({
 
   pdfPath: z.string().optional().nullable(),
 });
-
 export type LibroSummaryDto = z.infer<typeof LibroSummaryDto>;
+
+export const LibroDetailDto = LibroSummaryDto;
+export type LibroDetailDto = z.infer<typeof LibroCreateDto>;

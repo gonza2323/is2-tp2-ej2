@@ -8,6 +8,7 @@ import ar.edu.uncuyo.ej2b.repository.LocalidadRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +36,12 @@ public class LocalidadService {
     public Page<LocalidadDto> listarLocalidadesDtos(Pageable pageable) {
         Page<Localidad> localidades = localidadRepository.findAllByEliminadoFalse(pageable);
         return localidades.map(localidadMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public List<LocalidadDto> listarLocalidadesDtosTodas(Sort sort) {
+        List<Localidad> localidades = localidadRepository.findAllByEliminadoFalse(sort);
+        return localidadMapper.toDtos(localidades);
     }
 
     @Transactional

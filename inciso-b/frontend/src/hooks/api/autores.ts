@@ -1,6 +1,7 @@
 import { AutorDetailDto, AutorSummaryDto, AutorCreateDto } from '@/api/dtos';
 import { createDeleteMutationHook, createGetQueryHook, createPaginationQueryHook, createPostMutationHook, SortableQueryParams } from '@/api/helpers';
 import { notifications } from '@mantine/notifications';
+import { z } from 'zod';
 
 const QUERY_KEY = 'autores';
 const BASE_ENDPOINT = 'autores';
@@ -17,6 +18,12 @@ export const useGetAutores = createPaginationQueryHook<
 >({
   endpoint: BASE_ENDPOINT,
   dataSchema: AutorSummaryDto,
+  rQueryParams: { queryKey: [QUERY_KEY] },
+});
+
+export const useGetAutoresFull = createGetQueryHook({
+  endpoint: `${BASE_ENDPOINT}/all`,
+  responseSchema: z.array(AutorSummaryDto),
   rQueryParams: { queryKey: [QUERY_KEY] },
 });
 

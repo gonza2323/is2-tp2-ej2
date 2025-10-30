@@ -12,7 +12,7 @@ export const LocalidadDetailDto = z.object({
 export type LocalidadDetailDto = z.infer<typeof LocalidadDetailDto>;
 
 export const LocalidadSummaryDto = LocalidadDetailDto;
-export type LocalidadSummaryDto = z.infer<typeof LocalidadSummaryDto>;
+export type LocalidadSummaryDto = z.infer<typeof LocalidadDetailDto>;
 
-export const LocalidadUpdateDto = LocalidadDetailDto;
-export type LocalidadUpdateDto = z.infer<typeof LocalidadUpdateDto>;
+export const LocalidadUpdateDto = LocalidadCreateDto;
+export type LocalidadUpdateDto = z.infer<typeof LocalidadCreateDto>;

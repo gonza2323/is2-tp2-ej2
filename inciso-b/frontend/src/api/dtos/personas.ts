@@ -9,27 +9,30 @@ export const DomicilioCreateDto = z.object({
     .min(1, "Debe indicar la calle")
     .max(50, "Máximo 50 caracteres"),
   numeracion: z
-    .number({
-      required_error: "Debe indicar la numeración",
-      invalid_type_error: "Debe indicar la numeración",
-    }),
+    .string({ required_error: "Debe indicar la numeración" })
+    .min(1, "Debe indicar la numeración")
+    .transform((val) => Number(val)),
   localidadId: z
-    .number({
-      required_error: "Debe seleccionar una localidad",
-      invalid_type_error: "Debe seleccionar una localidad",
-    }),
+    .string({ required_error: "Debe seleccionar una localidad" })
+    .min(1, "Debe seleccionar una localidad")
+    .transform((val) => Number(val)),
 });
 
 export type DomicilioCreateDto = z.infer<typeof DomicilioCreateDto>;
 
 export const DomicilioUpdateDto = DomicilioCreateDto;
-export type DomicilioUpdateDto = z.infer<typeof DomicilioCreateDto>;
+export type DomicilioUpdateDto = z.infer<typeof DomicilioUpdateDto>;
 
-export const DomicilioDetailDto = DomicilioCreateDto;
-export type DomicilioDetailDto = z.infer<typeof DomicilioCreateDto>;
+export const DomicilioDetailDto = z.object({
+  id: z.number(),
+  calle: z.string(),
+  numeracion: z.number(),
+  localidadId: z.number(),
+});
+export type DomicilioDetailDto = z.infer<typeof DomicilioDetailDto>;
 
-export const DomicilioSummaryDto = DomicilioCreateDto;
-export type DomicilioSummaryDto = z.infer<typeof DomicilioCreateDto>;
+export const DomicilioSummaryDto = DomicilioDetailDto;
+export type DomicilioSummaryDto = z.infer<typeof DomicilioSummaryDto>;
 
 
 export const PersonaCreateDto = z.object({
@@ -47,20 +50,31 @@ export const PersonaCreateDto = z.object({
     .min(1, "El apellido no puede estar vacío")
     .max(50, "Máximo 50 caracteres"),
   dni: z
-    .number({
-      required_error: "Debe indicar el DNI",
-      invalid_type_error: "Debe indicar el DNI",
-    }),
+    .string({ required_error: "Debe indicar el DNI" })
+    .min(1, "Debe indicar el DNI")
+    .transform((val) => Number(val)),
   domicilio: DomicilioCreateDto, 
 });
 
 export type PersonaCreateDto = z.infer<typeof PersonaCreateDto>;
 
 export const PersonaUpdateDto = PersonaCreateDto;
-export type PersonaUpdateDto = z.infer<typeof PersonaCreateDto>;
+export type PersonaUpdateDto = z.infer<typeof PersonaUpdateDto>;
 
-export const PersonaDetailDto = PersonaCreateDto;
-export type PersonaDetailDto = z.infer<typeof PersonaCreateDto>;
+export const PersonaDetailDto = z.object({
+  id: z.number(),
+  nombre: z.string(),
+  apellido: z.string(),
+  dni: z.number(),
+  domicilio: DomicilioDetailDto,
+});
+export type PersonaDetailDto = z.infer<typeof PersonaDetailDto>;
 
-export const PersonaSummaryDto = PersonaCreateDto;
-export type PersonaSummaryDto = z.infer<typeof PersonaCreateDto>;
+export const PersonaSummaryDto = z.object({
+  id: z.number(),
+  nombre: z.string(),
+  apellido: z.string(),
+  dni: z.number(),
+  domicilio: DomicilioSummaryDto,
+});
+export type PersonaSummaryDto = z.infer<typeof PersonaSummaryDto>;

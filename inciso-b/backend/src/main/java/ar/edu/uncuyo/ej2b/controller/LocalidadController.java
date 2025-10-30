@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,12 @@ public class LocalidadController {
     @GetMapping
     public ResponseEntity<?> listarLocalidades(Pageable pageable) {
         Page<LocalidadDto> localidades = localidadService.listarLocalidadesDtos(pageable);
+        return ResponseEntity.ok(localidades);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> listarTodasLasLocalidades() {
+        List<LocalidadDto> localidades = localidadService.listarLocalidadesDtosTodas(Sort.by("denominacion"));
         return ResponseEntity.ok(localidades);
     }
 

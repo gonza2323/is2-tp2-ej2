@@ -21,4 +21,6 @@ public interface LocalidadMapper {
     void updateEntityFromDto(LocalidadDto dto, @MappingTarget Localidad localidad);
 
     LocalidadDto toDto(Localidad localidad);
+
+    List<LocalidadDto> toDtos(List<Localidad> localidades);
 }

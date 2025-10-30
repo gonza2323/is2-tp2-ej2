@@ -1,5 +1,6 @@
 package ar.edu.uncuyo.ej2b.controller;
 
+import ar.edu.uncuyo.ej2b.dto.LocalidadDto;
 import ar.edu.uncuyo.ej2b.dto.PersonaDto;
 import ar.edu.uncuyo.ej2b.entity.Persona;
 import ar.edu.uncuyo.ej2b.mapper.PersonaMapper;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +40,12 @@ public class PersonaController {
         Persona persona = personaService.crearPersona(personaDto);
         PersonaDto dto = personaMapper.toDto(persona);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> listarTodasLasPersonas() {
+        List<PersonaDto> personas = personaService.listarPersonasDtosTodas(Sort.by("apellido"));
+        return ResponseEntity.ok(personas);
     }
 
     @PutMapping("/{id}")

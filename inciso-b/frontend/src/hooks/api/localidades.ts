@@ -1,6 +1,7 @@
 import { LocalidadDetailDto, LocalidadSummaryDto, LocalidadCreateDto } from '@/api/dtos';
 import { createDeleteMutationHook, createGetQueryHook, createPaginationQueryHook, createPostMutationHook, SortableQueryParams } from '@/api/helpers';
 import { notifications } from '@mantine/notifications';
+import { z } from 'zod';
 
 const QUERY_KEY = 'localidades';
 const BASE_ENDPOINT = 'localidades';
@@ -8,6 +9,12 @@ const BASE_ENDPOINT = 'localidades';
 export const useGetLocalidad = createGetQueryHook({
   endpoint: `${BASE_ENDPOINT}/:id`,
   responseSchema: LocalidadDetailDto,
+  rQueryParams: { queryKey: [QUERY_KEY] },
+});
+
+export const useGetLocalidadesFull = createGetQueryHook({
+  endpoint: `${BASE_ENDPOINT}/all`,
+  responseSchema: z.array(LocalidadSummaryDto),
   rQueryParams: { queryKey: [QUERY_KEY] },
 });
 

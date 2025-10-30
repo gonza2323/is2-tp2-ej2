@@ -1,6 +1,7 @@
 package ar.edu.uncuyo.ej2b.service;
 
 import ar.edu.uncuyo.ej2b.dto.DomicilioDto;
+import ar.edu.uncuyo.ej2b.dto.LocalidadDto;
 import ar.edu.uncuyo.ej2b.dto.PersonaDto;
 import ar.edu.uncuyo.ej2b.entity.Domicilio;
 import ar.edu.uncuyo.ej2b.entity.Localidad;
@@ -11,8 +12,11 @@ import ar.edu.uncuyo.ej2b.repository.PersonaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +43,12 @@ public class PersonaService {
     public Page<PersonaDto> listarPersonasDtos(Pageable pageable) {
         Page<Persona> personas = personaRepository.findAllByEliminadoFalse(pageable);
         return personas.map(personaMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PersonaDto> listarPersonasDtosTodas(Sort sort) {
+        List<Persona> personas = personaRepository.findAllByEliminadoFalse(sort);
+        return personaMapper.toDtos(personas);
     }
 
     @Transactional
