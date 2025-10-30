@@ -31,7 +31,7 @@ public class LibroController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listarLibroes() {
+    public ResponseEntity<?> listarLibros() {
         List<LibroDto> libros = libroService.listarLibrosDtos();
         return ResponseEntity.ok(libros);
     }

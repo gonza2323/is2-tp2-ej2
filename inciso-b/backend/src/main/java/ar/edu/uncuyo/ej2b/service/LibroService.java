@@ -3,16 +3,18 @@ package ar.edu.uncuyo.ej2b.service;
 import ar.edu.uncuyo.ej2b.dto.LibroDto;
 import ar.edu.uncuyo.ej2b.entity.Autor;
 import ar.edu.uncuyo.ej2b.entity.Libro;
+import ar.edu.uncuyo.ej2b.entity.Persona;
 import ar.edu.uncuyo.ej2b.error.BusinessException;
 import ar.edu.uncuyo.ej2b.mapper.LibroMapper;
 import ar.edu.uncuyo.ej2b.repository.AutorRepository;
 import ar.edu.uncuyo.ej2b.repository.LibroRepository;
+import ar.edu.uncuyo.ej2b.repository.PersonaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +25,7 @@ public class LibroService {
     private final AutorService autorService;
     private final FileStorageService fileStorageService;
     private final AutorRepository autorRepository;
+    private final PersonaRepository personaRepository;
 
     @Transactional(readOnly = true)
     public Libro buscarLibro(Long id) {
@@ -45,7 +48,12 @@ public class LibroService {
     @Transactional
     public Libro crearLibro(LibroDto libroDto) {
         Libro libro = libroMapper.toEntity(libroDto);
+        libro.setAutores(new ArrayList<>());
         libro.setId(null);
+
+        Persona persona = personaRepository.findByIdAndEliminadoFalse(libroDto.getPersonaId())
+                        .orElseThrow();
+        libro.setPersona(persona);
 
         for (Long autorId : libroDto.getAutoresIds()) {
             Autor autor = autorService.buscarAutor(autorId);
@@ -76,6 +84,15 @@ public class LibroService {
         libro.setEliminado(true);
         libroRepository.save(libro);
     }
+
+    @Transactional
+    public void eliminarLibrosDePersona(Persona persona) {
+        List<Libro> libros = libroRepository.findAllByPersonaAndEliminadoFalse(persona);
+        for (Libro libro : libros)
+            libro.setEliminado(true);
+        libroRepository.saveAll(libros);
+    }
+
     @Transactional
     public Libro crearLibroConPdf(LibroDto dto, MultipartFile file) {
         Libro libro = libroMapper.toEntity(dto);
@@ -93,8 +110,4 @@ public class LibroService {
 
         return libroRepository.save(libro);
     }
-
-
-
-
 }

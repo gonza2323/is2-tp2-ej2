@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
+    boolean existsByNombreAndEliminadoFalse(String nombre);
+    boolean existsByDniAndEliminadoFalse(Integer dni);
+    boolean existsByDniAndIdNotAndEliminadoFalse(Integer dni, Long id);
+
     Optional<Persona> findByIdAndEliminadoFalse(Long id);
 
     List<Persona> findAllByEliminadoFalse();

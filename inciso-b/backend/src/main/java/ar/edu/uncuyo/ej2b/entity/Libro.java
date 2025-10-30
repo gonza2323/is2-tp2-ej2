@@ -3,7 +3,6 @@ package ar.edu.uncuyo.ej2b.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,10 @@ public class Libro {
 
     private boolean eliminado;
 
-    @ManyToMany
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Persona persona;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "libro_autor",
             joinColumns = @JoinColumn(name = "libro_id"),
@@ -42,8 +44,4 @@ public class Libro {
 
     @Column(name = "pdf_path")
     private String pdfPath;
-
-    @ManyToOne
-    @JoinColumn(name = "persona_id")
-    private Persona persona;
 }

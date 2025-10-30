@@ -6,6 +6,8 @@ import ar.edu.uncuyo.ej2b.mapper.LocalidadMapper;
 import ar.edu.uncuyo.ej2b.service.LocalidadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,8 @@ public class LocalidadController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listarLocalidades() {
-        List<LocalidadDto> localidades = localidadService.listarLocalidadesDtos();
+    public ResponseEntity<?> listarLocalidades(Pageable pageable) {
+        Page<LocalidadDto> localidades = localidadService.listarLocalidadesDtos(pageable);
         return ResponseEntity.ok(localidades);
     }
 
