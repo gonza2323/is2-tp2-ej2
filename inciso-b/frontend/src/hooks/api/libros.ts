@@ -1,32 +1,32 @@
-import { AutorDetailDto, AutorSummaryDto, AutorCreateDto } from '@/api/dtos';
+import { LibroDetailDto, LibroSummaryDto, LibroCreateDto } from '@/api/dtos';
 import { createDeleteMutationHook, createGetQueryHook, createPaginationQueryHook, createPostMutationHook, SortableQueryParams } from '@/api/helpers';
 import { notifications } from '@mantine/notifications';
 
-const QUERY_KEY = 'autores';
-const BASE_ENDPOINT = 'autores';
+const QUERY_KEY = 'libros';
+const BASE_ENDPOINT = 'libros';
 
-export const useGetAutor = createGetQueryHook({
+export const useGetLibro = createGetQueryHook({
   endpoint: `${BASE_ENDPOINT}/:id`,
-  responseSchema: AutorDetailDto,
+  responseSchema: LibroDetailDto,
   rQueryParams: { queryKey: [QUERY_KEY] },
 });
 
-export const useGetAutores = createPaginationQueryHook<
-  typeof AutorSummaryDto,
+export const useGetLibros = createPaginationQueryHook<
+  typeof LibroSummaryDto,
   SortableQueryParams
 >({
   endpoint: BASE_ENDPOINT,
-  dataSchema: AutorSummaryDto,
+  dataSchema: LibroSummaryDto,
   rQueryParams: { queryKey: [QUERY_KEY] },
 });
 
-export const useCreateAutor = createPostMutationHook({
+export const useCreateLibro = createPostMutationHook({
   endpoint: BASE_ENDPOINT,
-  bodySchema: AutorCreateDto,
-  responseSchema: AutorDetailDto,
+  bodySchema: LibroCreateDto,
+  responseSchema: LibroDetailDto,
 });
 
-export const useDeleteAutor = createDeleteMutationHook<
+export const useDeleteLibro = createDeleteMutationHook<
   { id: number }
 >({
   endpoint: `${BASE_ENDPOINT}/:id`,
@@ -35,14 +35,14 @@ export const useDeleteAutor = createDeleteMutationHook<
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       notifications.show({
         title: 'Borrado',
-        message: 'El autor fue borrada con éxito',
+        message: 'El libro fue borrada con éxito',
         color: 'green',
       });
     },
     onError: (error) => {
       notifications.show({
         title: 'Error',
-        message: error.message || 'No se pudo borrar el autor',
+        message: error.message || 'No se pudo borrar el libro',
         color: 'red',
       });
     },

@@ -6,6 +6,8 @@ import ar.edu.uncuyo.ej2b.error.BusinessException;
 import ar.edu.uncuyo.ej2b.mapper.AutorMapper;
 import ar.edu.uncuyo.ej2b.repository.AutorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +32,9 @@ public class AutorService {
     }
 
     @Transactional(readOnly = true)
-    public List<AutorDto> listarAutoresDtos() {
-        List<Autor> autores = autorRepository.findAllByEliminadoFalse();
-        return autorMapper.toDtos(autores);
+    public Page<AutorDto> listarAutoresDtos(Pageable pageable) {
+        Page<Autor> autores = autorRepository.findAllByEliminadoFalse(pageable);
+        return autores.map(autorMapper::toDto);
     }
 
     @Transactional

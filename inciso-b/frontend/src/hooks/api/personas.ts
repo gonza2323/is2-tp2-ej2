@@ -1,32 +1,32 @@
-import { AutorDetailDto, AutorSummaryDto, AutorCreateDto } from '@/api/dtos';
+import { PersonaDetailDto, PersonaSummaryDto, PersonaCreateDto } from '@/api/dtos';
 import { createDeleteMutationHook, createGetQueryHook, createPaginationQueryHook, createPostMutationHook, SortableQueryParams } from '@/api/helpers';
 import { notifications } from '@mantine/notifications';
 
-const QUERY_KEY = 'autores';
-const BASE_ENDPOINT = 'autores';
+const QUERY_KEY = 'personas';
+const BASE_ENDPOINT = 'personas';
 
-export const useGetAutor = createGetQueryHook({
+export const useGetPersona = createGetQueryHook({
   endpoint: `${BASE_ENDPOINT}/:id`,
-  responseSchema: AutorDetailDto,
+  responseSchema: PersonaDetailDto,
   rQueryParams: { queryKey: [QUERY_KEY] },
 });
 
-export const useGetAutores = createPaginationQueryHook<
-  typeof AutorSummaryDto,
+export const useGetPersonas = createPaginationQueryHook<
+  typeof PersonaSummaryDto,
   SortableQueryParams
 >({
   endpoint: BASE_ENDPOINT,
-  dataSchema: AutorSummaryDto,
+  dataSchema: PersonaSummaryDto,
   rQueryParams: { queryKey: [QUERY_KEY] },
 });
 
-export const useCreateAutor = createPostMutationHook({
+export const useCreatePersona = createPostMutationHook({
   endpoint: BASE_ENDPOINT,
-  bodySchema: AutorCreateDto,
-  responseSchema: AutorDetailDto,
+  bodySchema: PersonaCreateDto,
+  responseSchema: PersonaDetailDto,
 });
 
-export const useDeleteAutor = createDeleteMutationHook<
+export const useDeletePersona = createDeleteMutationHook<
   { id: number }
 >({
   endpoint: `${BASE_ENDPOINT}/:id`,
@@ -35,14 +35,14 @@ export const useDeleteAutor = createDeleteMutationHook<
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       notifications.show({
         title: 'Borrado',
-        message: 'El autor fue borrada con éxito',
+        message: 'La persona fue borrada con éxito',
         color: 'green',
       });
     },
     onError: (error) => {
       notifications.show({
         title: 'Error',
-        message: error.message || 'No se pudo borrar el autor',
+        message: error.message || 'No se pudo borrar la persona',
         color: 'red',
       });
     },

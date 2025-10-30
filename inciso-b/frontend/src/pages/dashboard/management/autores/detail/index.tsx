@@ -1,7 +1,7 @@
 import { Page } from '@/components/page';
 import { PageHeader } from '@/components/page-header';
 import { paths } from '@/routes';
-import ProveedorDetalle from './localidad-detalle';
+import ProveedorDetalle from './persona-detail';
 import { useParams } from 'react-router-dom';
 
 const breadcrumbs = [
@@ -11,7 +11,7 @@ const breadcrumbs = [
   { label: 'Detalle Proveedor' },
 ];
 
-export default function LocalidadDetailPage() {
+export default function PersonaDetailPage() {
   const { proveedorId } = useParams<{ proveedorId: string }>();
 
   return (

@@ -93,39 +93,6 @@ export const menu: MenuItem[] = [
           },
         ],
       },
-      {
-        name: 'Proveedores',
-        icon: PiTruck,
-        href: paths.dashboard.management.proveedores.root,
-        dropdownItems: [
-          {
-            name: 'List',
-            href: paths.dashboard.management.proveedores.list,
-          },
-        ],
-      },
-      {
-        name: 'Artículos',
-        icon: PiShoppingCart,
-        href: paths.dashboard.management.articulos.root,
-        dropdownItems: [
-          {
-            name: 'List',
-            href: paths.dashboard.management.articulos.list,
-          },
-        ],
-      },
-      {
-        name: 'Customers',
-        icon: PiUsersDuotone,
-        href: paths.dashboard.management.customers.root,
-        dropdownItems: [
-          {
-            name: 'List',
-            href: paths.dashboard.management.customers.list,
-          },
-        ],
-      },
     ],
   },
 

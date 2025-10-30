@@ -1,6 +1,7 @@
 package ar.edu.uncuyo.ej2b.init;
 
 import ar.edu.uncuyo.ej2b.dto.*;
+import ar.edu.uncuyo.ej2b.dto.libro.LibroCreateDto;
 import ar.edu.uncuyo.ej2b.entity.Localidad;
 import ar.edu.uncuyo.ej2b.repository.LocalidadRepository;
 import ar.edu.uncuyo.ej2b.repository.PersonaRepository;
@@ -90,9 +91,9 @@ public class DataInitialization implements CommandLineRunner {
     @Transactional
     protected void crearPersonas() {
         List<Localidad> localidades = localidadRepository.findAll();
-        long randomLocalidadId = localidades.get(random.nextInt(localidades.size())).getId();
 
         for (int i = 1; i < CANT_PERSONAS + 1; i++) {
+            long randomLocalidadId = localidades.get(random.nextInt(localidades.size())).getId();
             personaService.crearPersona(PersonaDto.builder()
                     .nombre("NOMBRE " + String.format("%02d", i))
                     .apellido("APELLIDO " + String.format("%02d", i))
@@ -114,7 +115,7 @@ public class DataInitialization implements CommandLineRunner {
 
     @Transactional
     protected void crearLibroRandom(int i) {
-        libroService.crearLibro(LibroDto.builder()
+        libroService.crearLibro(LibroCreateDto.builder()
                 .titulo("TÍTULO " + String.format("%02d", i))
                 .fecha(random.nextInt(1900, 2025))
                 .paginas(random.nextInt(20, 3000))

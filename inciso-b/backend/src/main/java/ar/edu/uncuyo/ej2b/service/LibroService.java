@@ -1,6 +1,7 @@
 package ar.edu.uncuyo.ej2b.service;
 
-import ar.edu.uncuyo.ej2b.dto.LibroDto;
+import ar.edu.uncuyo.ej2b.dto.libro.LibroCreateDto;
+import ar.edu.uncuyo.ej2b.dto.libro.LibroSummaryDto;
 import ar.edu.uncuyo.ej2b.entity.Autor;
 import ar.edu.uncuyo.ej2b.entity.Libro;
 import ar.edu.uncuyo.ej2b.entity.Persona;
@@ -10,6 +11,8 @@ import ar.edu.uncuyo.ej2b.repository.AutorRepository;
 import ar.edu.uncuyo.ej2b.repository.LibroRepository;
 import ar.edu.uncuyo.ej2b.repository.PersonaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,19 +37,19 @@ public class LibroService {
     }
 
     @Transactional(readOnly = true)
-    public LibroDto buscarLibroDto(Long id) {
+    public LibroCreateDto buscarLibroDto(Long id) {
         Libro libro = buscarLibro(id);
         return libroMapper.toDto(libro);
     }
 
     @Transactional(readOnly = true)
-    public List<LibroDto> listarLibrosDtos() {
-        List<Libro> libros = libroRepository.findAllByEliminadoFalseOrderByTitulo();
-        return libroMapper.toDtos(libros);
+    public Page<LibroSummaryDto> listarLibrosDtos(Pageable pageable) {
+        Page<Libro> libros = libroRepository.findAllByEliminadoFalse(pageable);
+        return libros.map(libroMapper::toSummaryDto);
     }
 
     @Transactional
-    public Libro crearLibro(LibroDto libroDto) {
+    public Libro crearLibro(LibroCreateDto libroDto) {
         Libro libro = libroMapper.toEntity(libroDto);
         libro.setAutores(new ArrayList<>());
         libro.setId(null);
@@ -64,7 +67,7 @@ public class LibroService {
     }
 
     @Transactional
-    public Libro modificarLibro(LibroDto libroDto) {
+    public Libro modificarLibro(LibroCreateDto libroDto) {
         Libro libro = buscarLibro(libroDto.getId());
 
         libroMapper.updateEntityFromDto(libroDto, libro);
@@ -94,7 +97,7 @@ public class LibroService {
     }
 
     @Transactional
-    public Libro crearLibroConPdf(LibroDto dto, MultipartFile file) {
+    public Libro crearLibroConPdf(LibroCreateDto dto, MultipartFile file) {
         Libro libro = libroMapper.toEntity(dto);
         libro.setId(null);
 

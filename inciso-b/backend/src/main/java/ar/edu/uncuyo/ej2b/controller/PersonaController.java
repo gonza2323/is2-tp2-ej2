@@ -6,6 +6,8 @@ import ar.edu.uncuyo.ej2b.mapper.PersonaMapper;
 import ar.edu.uncuyo.ej2b.service.PersonaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,8 @@ public class PersonaController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listarPersonas() {
-        List<PersonaDto> personas = personaService.listarPersonasDtos();
+    public ResponseEntity<?> listarPersonas(Pageable pageable) {
+        Page<PersonaDto> personas = personaService.listarPersonasDtos(pageable);
         return ResponseEntity.ok(personas);
     }
 

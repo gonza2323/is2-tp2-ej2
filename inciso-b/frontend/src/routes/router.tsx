@@ -114,8 +114,74 @@ const router = createBrowserRouter([
                 element: LazyPage(() => import('@/pages/dashboard/management/localidades/add')),
               },
               // {
-              //   path: paths.dashboard.management.localidades.root + '/:proveedorId',
+              //   path: paths.dashboard.management.localidades.root + '/:localidadId',
               //   element: LazyPage(() => import('@/pages/dashboard/management/localidades/detail')),
+              // },
+            ],
+          },
+          {
+            path: paths.dashboard.management.personas.root,
+            children: [
+              {
+                index: true,
+                path: paths.dashboard.management.personas.root,
+                element: <Navigate to={paths.dashboard.management.personas.list} replace />,
+              },
+              {
+                path: paths.dashboard.management.personas.list,
+                element: LazyPage(() => import('@/pages/dashboard/management/personas/list')),
+              },
+              {
+                path: paths.dashboard.management.personas.add,
+                element: LazyPage(() => import('@/pages/dashboard/management/personas/add')),
+              },
+              // {
+              //   path: paths.dashboard.management.personas.root + '/:personaId',
+              //   element: LazyPage(() => import('@/pages/dashboard/management/personas/detail')),
+              // },
+            ],
+          },
+          {
+            path: paths.dashboard.management.autores.root,
+            children: [
+              {
+                index: true,
+                path: paths.dashboard.management.autores.root,
+                element: <Navigate to={paths.dashboard.management.autores.list} replace />,
+              },
+              {
+                path: paths.dashboard.management.autores.list,
+                element: LazyPage(() => import('@/pages/dashboard/management/autores/list')),
+              },
+              {
+                path: paths.dashboard.management.autores.add,
+                element: LazyPage(() => import('@/pages/dashboard/management/autores/add')),
+              },
+              // {
+              //   path: paths.dashboard.management.autores.root + '/:autorId',
+              //   element: LazyPage(() => import('@/pages/dashboard/management/autores/detail')),
+              // },
+            ],
+          },
+          {
+            path: paths.dashboard.management.libros.root,
+            children: [
+              {
+                index: true,
+                path: paths.dashboard.management.libros.root,
+                element: <Navigate to={paths.dashboard.management.libros.list} replace />,
+              },
+              {
+                path: paths.dashboard.management.libros.list,
+                element: LazyPage(() => import('@/pages/dashboard/management/libros/list')),
+              },
+              {
+                path: paths.dashboard.management.libros.add,
+                element: LazyPage(() => import('@/pages/dashboard/management/libros/add')),
+              },
+              // {
+              //   path: paths.dashboard.management.libros.root + '/:libroId',
+              //   element: LazyPage(() => import('@/pages/dashboard/management/libros/detail')),
               // },
             ],
           },
@@ -160,20 +226,6 @@ const router = createBrowserRouter([
               {
                 path: paths.dashboard.management.articulos.root + '/:articuloId',
                 element: LazyPage(() => import('@/pages/dashboard/management/articulos/detail')),
-              },
-            ],
-          },
-          {
-            path: paths.dashboard.management.autores.root,
-            children: [
-              {
-                index: true,
-                path: paths.dashboard.management.autores.root,
-                element: <Navigate to={paths.dashboard.management.autores.list} replace />,
-              },
-              {
-                path: paths.dashboard.management.autores.list,
-                element: LazyPage(() => import('@/pages/dashboard/management/autores/list')),
               },
             ],
           },

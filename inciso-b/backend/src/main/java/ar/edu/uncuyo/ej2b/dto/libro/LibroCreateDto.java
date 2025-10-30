@@ -1,4 +1,4 @@
-package ar.edu.uncuyo.ej2b.dto;
+package ar.edu.uncuyo.ej2b.dto.libro;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LibroDto {
+public class LibroCreateDto {
     private Long id;
 
     @NotBlank(message = "El título no puede estar vacío")

@@ -2,19 +2,19 @@ import { Grid } from '@mantine/core';
 import { Page } from '@/components/page';
 import { PageHeader } from '@/components/page-header';
 import { paths } from '@/routes';
-import { AutoresTable } from './autores-list';
+import { PersonasTable } from './persona-table';
 
 const breadcrumbs = [
   { label: 'Dashboard', href: paths.dashboard.root },
   { label: 'Management', href: paths.dashboard.management.root },
-  { label: 'Autores', href: paths.dashboard.management.autores.root },
+  { label: 'Personas', href: paths.dashboard.management.personas.root },
   { label: 'Lista' },
 ];
 
-export default function ListAutoresPage() {
+export default function ListPersonasPage() {
   return (
-    <Page title="Lista autores">
-      <PageHeader title="Lista autores" breadcrumbs={breadcrumbs} />
+    <Page title="Lista personas">
+      <PageHeader title="Lista personas" breadcrumbs={breadcrumbs} />
 
       <Grid>
         {/* <Grid.Col span={12}>
@@ -22,7 +22,7 @@ export default function ListAutoresPage() {
         </Grid.Col> */}
 
         <Grid.Col span={12}>
-          <AutoresTable />
+          <PersonasTable />
         </Grid.Col>
       </Grid>
     </Page>

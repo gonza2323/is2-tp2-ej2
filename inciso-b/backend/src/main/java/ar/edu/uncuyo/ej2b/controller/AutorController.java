@@ -6,6 +6,8 @@ import ar.edu.uncuyo.ej2b.mapper.AutorMapper;
 import ar.edu.uncuyo.ej2b.service.AutorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,8 @@ public class AutorController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listarAutores() {
-        List<AutorDto> autores = autorService.listarAutoresDtos();
+    public ResponseEntity<?> listarAutores(Pageable pageable) {
+        Page<AutorDto> autores = autorService.listarAutoresDtos(pageable);
         return ResponseEntity.ok(autores);
     }
 

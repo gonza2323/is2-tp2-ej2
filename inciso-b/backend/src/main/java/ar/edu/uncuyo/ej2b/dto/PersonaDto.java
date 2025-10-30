@@ -28,5 +28,5 @@ public class PersonaDto {
     private Integer dni;
 
     @Valid
-    private DomicilioDto domicilio;
+    private DomicilioDto domicilio = new DomicilioDto();
 }
