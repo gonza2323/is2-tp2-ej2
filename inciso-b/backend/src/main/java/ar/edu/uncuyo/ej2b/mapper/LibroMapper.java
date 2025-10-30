@@ -17,11 +17,13 @@ public interface LibroMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "eliminado", ignore = true)
+    @Mapping(target = "persona", ignore = true)
     @Mapping(target = "autores", ignore = true)
     Libro toEntity(LibroDto dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "eliminado", ignore = true)
+    @Mapping(target = "persona", ignore = true)
     @Mapping(target = "autores", ignore = true)
     void updateEntityFromDto(LibroDto dto, @MappingTarget Libro libro);
 

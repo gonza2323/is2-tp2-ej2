@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,8 +33,4 @@ public class Persona {
     @JoinColumn(nullable = false)
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, optional = false)
     private Domicilio domicilio;
-
-    @JoinColumn(nullable = false)
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Libro> libros;
 }

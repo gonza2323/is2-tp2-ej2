@@ -45,6 +45,9 @@ public class PersonaService {
 
     @Transactional
     public Persona crearPersona(PersonaDto personaDto) {
+        if (personaRepository.existsByDniAndEliminadoFalse(personaDto.getDni()))
+            throw new BusinessException("Ya existe una persona con ese DNI");
+
         Persona persona = personaMapper.toEntity(personaDto);
         persona.setId(null);
 
@@ -56,6 +59,9 @@ public class PersonaService {
 
     @Transactional
     public Persona modificarPersona(PersonaDto personaDto) {
+        if (personaRepository.existsByDniAndIdNotAndEliminadoFalse(personaDto.getDni(), personaDto.getId()))
+            throw new BusinessException("Ya existe una persona con ese DNI");
+
         Persona persona = buscarPersona(personaDto.getId());
         personaMapper.updateEntityFromDto(personaDto, persona);
 
@@ -70,10 +76,7 @@ public class PersonaService {
     public void eliminarPersona(Long id) {
         Persona persona = buscarPersona(id);
         persona.setEliminado(true);
-
-        for (Libro libro : persona.getLibros())
-            libroService.eliminarLibro(libro.getId());
-
+        libroService.eliminarLibrosDePersona(persona);
         personaRepository.save(persona);
     }
 }

@@ -3,7 +3,7 @@ package ar.edu.uncuyo.ej2b.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,6 +31,9 @@ public class Libro {
 
     private boolean eliminado;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Persona persona;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Autor> autores;
+    private List<Autor> autores = new ArrayList<>();
 }
