@@ -11,12 +11,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface AutorMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "eliminado", ignore = true)
+
     Autor toEntity(AutorDto dto);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "eliminado", ignore = true)
+
     void updateEntityFromDto(AutorDto dto, @MappingTarget Autor autor);
 
     AutorDto toDto(Autor autor);

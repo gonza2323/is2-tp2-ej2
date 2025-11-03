@@ -10,9 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(builderMethodName = "dtoBuilder")
 public class AutorDto extends Autor {
     private Long id;
 

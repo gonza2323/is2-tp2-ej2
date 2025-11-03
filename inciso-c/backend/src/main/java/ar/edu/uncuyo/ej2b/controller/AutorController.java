@@ -14,27 +14,32 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/autores")
-@RequiredArgsConstructor
 public class AutorController extends BaseControllerImpl<Autor, AutorServiceImpl> {
 
     private final AutorService autorService;
     private final AutorMapper autorMapper;
 
-    // 🔹 Endpoint personalizado: obtener un autor como DTO
+    public AutorController(AutorService autorService, AutorMapper autorMapper) {
+        this.autorService = autorService;
+        this.autorMapper = autorMapper;
+    }
+
+    // 🔹 Obtener un autor como DTO
+    @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarAutor(@PathVariable Long id) throws Exception {
+    public ResponseEntity<?> getOne(@PathVariable Long id) throws Exception {
         AutorDto autor = autorService.buscarAutorDto(id);
         return ResponseEntity.ok(autor);
     }
 
-    // 🔹 Endpoint personalizado: listar todos los autores como DTOs
+    // 🔹 Listar autores como DTOs
     @GetMapping
     public ResponseEntity<?> listarAutores() throws Exception {
         List<AutorDto> autores = autorService.listarAutoresDtos();
         return ResponseEntity.ok(autores);
     }
 
-    // 🔹 Endpoint personalizado: crear un autor usando DTO
+    // 🔹 Crear un autor usando DTO
     @PostMapping
     public ResponseEntity<?> crearAutor(@Valid @RequestBody AutorDto autorDto) throws Exception {
         Autor autor = autorService.crearAutor(autorDto);
@@ -42,13 +47,57 @@ public class AutorController extends BaseControllerImpl<Autor, AutorServiceImpl>
         return ResponseEntity.ok(dto);
     }
 
-    // 🔹 Endpoint personalizado: actualizar un autor usando DTO
+    // 🔹 Actualizar un autor usando DTO
+    @Override
     @PutMapping("/{id}")
-    public ResponseEntity<?> modificarAutor(@PathVariable Long id, @Valid @RequestBody AutorDto autorDto) throws Exception {
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody AutorDto autorDto) throws Exception {
         autorDto.setId(id);
         Autor autor = autorService.modificarAutor(autorDto);
         AutorDto dto = autorMapper.toDto(autor);
         return ResponseEntity.ok(dto);
     }
 }
+
+
+//@RestController
+//@RequestMapping("/api/v1/autores")
+//@RequiredArgsConstructor
+//public class AutorController extends BaseControllerImpl<Autor, AutorServiceImpl> {
+//
+//    private final AutorService autorService;
+//    private final AutorMapper autorMapper;
+//
+//    // 🔹 Endpoint personalizado: obtener un autor como DTO
+//    @Override
+//    @GetMapping("/{id}")
+//    public ResponseEntity<?> getOne(@PathVariable Long id) throws Exception {
+//        AutorDto autor = autorService.buscarAutorDto(id);
+//        return ResponseEntity.ok(autor);
+//    }
+//
+//    // 🔹 Endpoint personalizado: listar todos los autores como DTOs
+//    @GetMapping
+//    public ResponseEntity<?> listarAutores() throws Exception {
+//        List<AutorDto> autores = autorService.listarAutoresDtos();
+//        return ResponseEntity.ok(autores);
+//    }
+//
+//    // 🔹 Endpoint personalizado: crear un autor usando DTO
+//    @PostMapping
+//    public ResponseEntity<?> crearAutor(@Valid @RequestBody AutorDto autorDto) throws Exception {
+//        Autor autor = autorService.crearAutor(autorDto);
+//        AutorDto dto = autorMapper.toDto(autor);
+//        return ResponseEntity.ok(dto);
+//    }
+//
+//    // 🔹 Endpoint personalizado: actualizar un autor usando DTO
+//    @PutMapping("/{id}")
+//    @Override
+//    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody AutorDto autorDto) throws Exception {
+//        autorDto.setId(id);
+//        Autor autor = autorService.modificarAutor(autorDto);
+//        AutorDto dto = autorMapper.toDto(autor);
+//        return ResponseEntity.ok(dto);
+//    }
+//}
 

@@ -37,14 +37,14 @@ public class LibroController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearLibro(@Valid @RequestBody LibroDto libroDto) {
+    public ResponseEntity<?> crearLibro(@Valid @RequestBody LibroDto libroDto) throws Exception {
         Libro libro = libroService.crearLibro(libroDto);
         LibroDto dto = libroMapper.toDto(libro);
         return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> modificarLibro(@PathVariable Long id, @Valid @RequestBody LibroDto libroDto) {
+    public ResponseEntity<?> modificarLibro(@PathVariable Long id, @Valid @RequestBody LibroDto libroDto) throws Exception {
         libroDto.setId(id);
         Libro libro = libroService.modificarLibro(libroDto);
         LibroDto dto = libroMapper.toDto(libro);

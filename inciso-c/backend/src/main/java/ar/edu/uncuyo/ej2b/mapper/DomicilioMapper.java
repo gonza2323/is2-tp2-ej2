@@ -12,13 +12,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface DomicilioMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "eliminado", ignore = true)
+
     @Mapping(target = "localidad", ignore = true)
     Domicilio toEntity(DomicilioDto dto);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "eliminado", ignore = true)
+
     @Mapping(target = "localidad", ignore = true)
     void updateEntityFromDto(DomicilioDto dto, @MappingTarget Domicilio domicilio);
 
